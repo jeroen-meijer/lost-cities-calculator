@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+@theme inline {
+  --font-sans: "Geist Variable", system-ui, sans-serif;
+  --color-exp-orange: #ea580c;
+  --color-exp-green: #16a34a;
+  --color-exp-blue: #2563eb;
+  --color-exp-yellow: #eab308;
+  --color-exp-purple: #7c3aed;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, #1e293b 0%, #0f172a 45%, #020617 100%);
+  color: #e2e8f0;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+/* Comfortable scroll for horizontal expedition tabs on iPhone */
+.scrollbar-pad {
+  scrollbar-width: thin;
+  padding-bottom: 2px;
+}
+
+.app-shell {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.total-bar {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
