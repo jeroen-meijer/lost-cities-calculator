@@ -7,6 +7,7 @@ import {
   cardCount,
   emptyExpedition,
   scoreExpedition,
+  scoreExpeditionBreakdown,
   toggleRank,
   toggleWagerSlot,
   wagerCount,
@@ -129,6 +130,41 @@ describe('scoreExpedition — full ladder (reference totals)', () => {
     const s = snapshot(3, allRanks)
     expect(scoreExpedition(s)).toBe((sum - 20) * 4 + 20)
     expect(scoreExpedition(s)).toBe(156)
+  })
+})
+
+describe('scoreExpeditionBreakdown', () => {
+  it('empty expedition breaks down to zeros', () => {
+    const breakdown = scoreExpeditionBreakdown(emptyExpedition())
+    expect(breakdown).toEqual({ baseScore: 0, bonus: 0, total: 0 })
+  })
+
+  it('shows no bonus when cards < 8', () => {
+    const sevenCards = snapshot(0, [2, 3, 4, 5, 6, 7, 8])
+    const breakdown = scoreExpeditionBreakdown(sevenCards)
+    expect(breakdown.bonus).toBe(0)
+    expect(breakdown.total).toBe(breakdown.baseScore)
+  })
+
+  it('shows +20 bonus when cards >= 8', () => {
+    const eightCards = snapshot(0, [2, 3, 4, 5, 6, 7, 8, 9])
+    const breakdown = scoreExpeditionBreakdown(eightCards)
+    expect(breakdown.bonus).toBe(20)
+    expect(breakdown.baseScore).toBe(24)
+    expect(breakdown.total).toBe(44)
+  })
+
+  it('breakdown total matches scoreExpedition', () => {
+    const cases = [
+      snapshot(0, [2, 3, 4, 5, 6, 7, 8, 9]),
+      snapshot(2, [3, 4, 5, 7, 8, 9]),
+      snapshot(1, [2, 3, 4, 5, 6, 7]),
+      snapshot(3, [...RANKS]),
+    ]
+    for (const snap of cases) {
+      const breakdown = scoreExpeditionBreakdown(snap)
+      expect(breakdown.total).toBe(scoreExpedition(snap))
+    }
   })
 })
 

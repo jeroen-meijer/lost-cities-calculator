@@ -49,6 +49,24 @@ export function scoreExpedition(snapshot: ExpeditionSnapshot): number {
   return points
 }
 
+/**
+ * Returns the base score (without 8-card bonus) and bonus amount separately.
+ * Useful for displaying the bonus breakdown in UI.
+ */
+export function scoreExpeditionBreakdown(snapshot: ExpeditionSnapshot): {
+  baseScore: number
+  bonus: number
+  total: number
+} {
+  const n = cardCount(snapshot)
+  if (n === 0) return { baseScore: 0, bonus: 0, total: 0 }
+  const w = wagerCount(snapshot)
+  const sum = numberedSum(snapshot)
+  const baseScore = (sum - 20) * (1 + w)
+  const bonus = n >= 8 ? 20 : 0
+  return { baseScore, bonus, total: baseScore + bonus }
+}
+
 export function emptyExpedition(): ExpeditionSnapshot {
   return { wagerMask: 0, rankMask: 0 }
 }

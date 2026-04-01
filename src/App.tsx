@@ -9,6 +9,7 @@ import {
   emptyExpedition,
   rankIsActive,
   scoreExpedition,
+  scoreExpeditionBreakdown,
   toggleRank,
   toggleWagerSlot,
   wagerSlotIsActive,
@@ -98,6 +99,7 @@ type ExpeditionPanelProps = {
 
 function ExpeditionPanel({ exp, snap, onSetSnap, compact }: ExpeditionPanelProps) {
   const colScore = scoreExpedition(snap)
+  const breakdown = scoreExpeditionBreakdown(snap)
   const nCards = cardCount(snap)
   const gap = compact ? 'gap-2' : 'gap-1.5'
   const btnH = compact ? 'min-h-12 py-3 md:min-h-10 md:py-0' : 'h-10'
@@ -169,6 +171,16 @@ function ExpeditionPanel({ exp, snap, onSetSnap, compact }: ExpeditionPanelProps
         <div className="mt-1 flex justify-center">
           <ScoreFigure value={colScore} />
         </div>
+        {breakdown.bonus > 0 && (
+          <div className="mt-2 flex flex-col items-center gap-0.5 text-[0.65rem] text-slate-400">
+            <p className="text-slate-500">
+              <span className="text-slate-300 font-semibold">
+                {breakdown.baseScore > 0 ? `+${breakdown.baseScore}` : breakdown.baseScore}
+              </span>
+              {' '}+ <span className="text-emerald-400 font-semibold">+{breakdown.bonus}</span> bonus
+            </p>
+          </div>
+        )}
       </footer>
     </section>
   )
