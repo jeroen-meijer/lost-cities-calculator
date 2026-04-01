@@ -172,14 +172,7 @@ function ExpeditionPanel({ exp, snap, onSetSnap, compact }: ExpeditionPanelProps
           <ScoreFigure value={colScore} />
         </div>
         {breakdown.bonus > 0 && (
-          <div className="mt-2 flex flex-col items-center gap-0.5 text-[0.65rem] text-slate-400">
-            <p className="text-slate-500">
-              <span className="text-slate-300 font-semibold">
-                {breakdown.baseScore > 0 ? `+${breakdown.baseScore}` : breakdown.baseScore}
-              </span>
-              {' '}+ <span className="text-emerald-400 font-semibold">+{breakdown.bonus}</span> bonus
-            </p>
-          </div>
+          <p className="mt-2 text-[0.65rem] text-emerald-400 font-semibold">+{breakdown.bonus} bonus</p>
         )}
       </footer>
     </section>
